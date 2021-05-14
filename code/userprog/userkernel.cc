@@ -22,14 +22,11 @@ UserProgKernel::UserProgKernel(int argc, char **argv)
 		: ThreadedKernel(argc, argv)
 {
     debugUserProg = FALSE;
-    //<TRACE
-    // Initialize synchconsole input/output & PhysicalRage
     consoleIn = NULL;
     consoleOut = NULL;
     for (int i = 0; i < NumPhysPages; i++)
         PhysicalPageUsed[NumPhysPages] = FALSE;
-    //TRACE>
-	execfileNum=0;
+	execfileNum = 0;
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-s") == 0) {
 		    debugUserProg = TRUE;
@@ -37,12 +34,12 @@ UserProgKernel::UserProgKernel(int argc, char **argv)
 		else if (strcmp(argv[i], "-e") == 0) {
 			execfile[++execfileNum]= argv[++i];
 		}
-		//<TODO
-        // Get execfile & its priority from argv, then save them.
-		else if (strcmp(argv[i], "-ep") == 0) {
+		//<TODO>
+        // Get execfile & its priority & burst time from argv, then save them.
+		else if (strcmp(argv[i], "-epb") == 0) {
 
 	    }
-	    //TODO>
+	    //<TODO>
 	    else if (strcmp(argv[i], "-u") == 0) {
 			cout << "===========The following argument is defined in userkernel.cc" << endl;
 			cout << "Partial usage: nachos [-s]\n";
@@ -73,12 +70,11 @@ UserProgKernel::Initialize()
     machine = new Machine(debugUserProg);
     fileSystem = new FileSystem();
 
-    //<TRACE
-    currentThread = new Thread("main", threadNum++);
 
+    currentThread = new Thread("main", threadNum++);	
     synchConsoleIn = new SynchConsoleInput(consoleIn);
-    synchConsoleOut = new SynchConsoleOutput(consoleOut); 	
-    //TRACE>
+    synchConsoleOut = new SynchConsoleOutput(consoleOut);  
+
     currentThread->setStatus(RUNNING);
 
     interrupt->Enable();
@@ -101,7 +97,6 @@ UserProgKernel::~UserProgKernel()
 #ifdef FILESYS
     delete synchDisk;
 #endif
-
     delete synchConsoleIn;
     delete synchConsoleOut;
 }
@@ -173,37 +168,40 @@ UserProgKernel::SelfTest() {
 //	cout << "This is self test message from UserProgKernel\n" ;
 }
 
+
 void
 ForkExecute(Thread *t)
 {
-    DEBUG(dbgMLFQ, "ForkExecute => fork thread id: " << t->getID() << ", currentTick: " << kernel->stats->totalTicks);
-    
-
-    //<TODO
+    // cout << "Thread: " << (void *) t << endl;
+    //<TODO>
     // When Thread t goes to Running state in the first time, its file should be loaded & executed.
-    //TODO>
+    // Hint: This function would not be called until Thread t is on running state.
+    //<TODO>
 }
 
 int 
-UserProgKernel::Exec(char* name, int priority)
+UserProgKernel::InitializeOneThread(char* name, int priority, int burst_time)
 {
-    //<TODO
+    //<TODO>
     // When each execfile comes to Exec function, Kernel helps to create a thread for it.
     // While creating a new thread, thread should be initialized, and then forked.
-    //TODO>
+    t[threadNum]->space = new AddrSpace();
+    t[threadNum]->Fork((VoidFunctionPtr) &ForkExecute, (void *)t[threadNum]);
+    //<TODO>
+
     threadNum++;
     return threadNum - 1;
 }
 
 void 
-UserProgKernel::ExecAll()
+UserProgKernel::InitializeAllThreads()
 {
-    //<TRACE
     for (int i = 1; i <= execfileNum; i++){
-        int a = Exec(execfile[i], threadPriority[i]);
+        // cout << "execfile[" << i << "]: " << execfile[i] << " start " << endl;
+        int a = InitializeOneThread(execfile[i], threadPriority[i], threadRemainingBurstTime[i]);
+        // cout << "execfile[" << i << "]: " << execfile[i] << " end "<< endl;
     }
-    // After executing Exec() for all threads, let main thread be terminated that we can start to run our thread.
+    // After InitializeAllThreads(), let main thread be terminated that we can start to run our thread.
     currentThread->Finish();
-    //TRACE>
     // kernel->machine->Run();
 }

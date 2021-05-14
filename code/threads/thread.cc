@@ -33,11 +33,9 @@ const int STACK_FENCEPOST = 0xdedbeef;
 //	"threadName" is an arbitrary string, useful for debugging.
 //----------------------------------------------------------------------
 
-//<TRACE
 Thread::Thread(char* threadName, int threadID)
 {
     ID = threadID;
-    //TRACE>
     name = threadName;
     stackTop = NULL;
     stack = NULL;
@@ -214,11 +212,14 @@ Thread::Yield ()
     ASSERT(this == kernel->currentThread);
     
     DEBUG(dbgThread, "Yielding thread: " << name << ", ID: " << ID);
-    //<TODO
+    
+    //<TODO>
     // 1. Put current_thread in running state to ready state
     // 2. Then, find next thread from ready state to push on running state
     // 3. After resetting some value of current_thread, then context switch
-    //TODO>
+    kernel->scheduler->Run(nextThread, finishing);
+    //<TODO>
+
     (void) kernel->interrupt->SetLevel(oldLevel);
 }
 
@@ -254,14 +255,15 @@ Thread::Sleep (bool finishing)
 
     status = BLOCKED;
     while ((nextThread = kernel->scheduler->FindNextToRun()) == NULL)
-	    kernel->interrupt->Idle();	// no one to run, wait for an interrupt
-    
-    //<TODO
+	    kernel->interrupt->Idle();	// no one to run, wait for an interruptd
+
+    //<TODO>
     // In Thread::Sleep(finishing), we put the current_thread to waiting or terminated state (depend on finishing)
     // , and determine finishing on Scheduler::Run(nextThread, finishing), not here.
-    // 1. Update PredictBurstTime
+    // 1. Update RemainingBurstTime
     // 2. Reset some value of current_thread, then context switch
-    //TODO>
+    kernel->scheduler->Run(nextThread, finishing);
+    //<TODO>
 }
 
 //----------------------------------------------------------------------
@@ -312,7 +314,6 @@ PLabelToAddr(void *plabel)
 //	"arg" is the parameter to be passed to the procedure
 //----------------------------------------------------------------------
 
-//<TRACE
 void
 Thread::StackAllocate (VoidFunctionPtr func, void *arg)
 {
@@ -371,7 +372,6 @@ Thread::StackAllocate (VoidFunctionPtr func, void *arg)
     machineState[WhenDonePCState] = (void *)ThreadFinish;
 #endif
 }
-//TRACE>
 
 #ifdef USER_PROGRAM
 #include "machine.h"

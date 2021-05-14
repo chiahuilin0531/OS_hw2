@@ -90,7 +90,7 @@ Msg:
 	j	$31
 	.end Msg
 
-//<HW1
+//<hw1
 	.globl Open
 	.ent	Open
 Open:
@@ -122,7 +122,7 @@ Close:
 	syscall
 	j	$31
 	.end Close
-//HW1>
+//hw1>
 
         .globl ThreadFork
         .ent    ThreadFork

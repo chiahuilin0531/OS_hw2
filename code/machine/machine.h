@@ -29,11 +29,8 @@
 
 const unsigned int PageSize = 128; 		// set the page size equal to
 					// the disk sector size, for simplicity
-//<TRACE
-// Increase NumPhysPages from 32 to 128 to enlarge Memorysize
 // const unsigned int NumPhysPages = 32;
 const unsigned int NumPhysPages = 128;
-//TRACE>
 const int MemorySize = (NumPhysPages * PageSize);
 const int TLBSize = 4;			// if there is a TLB, make it small
 

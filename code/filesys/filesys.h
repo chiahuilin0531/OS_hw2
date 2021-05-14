@@ -63,7 +63,7 @@ class FileSystem {
     bool Remove(char *name) { return Unlink(name) == 0; }
 
 	
-	//<HW1
+	//<hw1
 	/*The OpenAFile function is used for kernel open system call
 	
 	OpenFile* filePtr;	//you need to use this filePtr to manage the current file
@@ -73,7 +73,7 @@ class FileSystem {
 	int ReadFile(char *buffer, int size);
 	int CloseFile();
 	*/
-	//HW1>
+	//hw1>
     OpenFile* filePtr;	//you need to use this filePtr to manage the current file
 
 	int OpenAFile(char *name){

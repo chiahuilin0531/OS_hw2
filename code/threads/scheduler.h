@@ -38,10 +38,9 @@ class Scheduler {
     					// running needs to be deleted
 	void Print();			// Print contents of ready list
     
-	//<TRACE
-	// Update all priority of Threads of L1, L2, L3 ReadyQueue
+	//<REPORT>
 	void UpdatePriority();
-	//TRACE>
+	//<REPORT>
 
     // SelfTest for scheduler is implemented in class Thread
     
@@ -49,13 +48,12 @@ class Scheduler {
 	SchedulerType schedulerType;
 	Thread *toBeDestroyed;		// finishing thread to be destroyed
     					// by the next thread that runs
-	//<TRACE
-	//For L1 & L2 ReadyQueue, use SortedList<Thread* > with its own sorting rule to insert or remove Thread
-	//For L3 ReadyQueue, just use List<Thread* > to manipulate Thread
+	
+	//<REPORT>
 	SortedList<Thread* > *L1ReadyQueue;
 	SortedList<Thread* > *L2ReadyQueue;
 	List<Thread* > *L3ReadyQueue;
-	//TRACE>
+	//<REPORT>
 };
 
 #endif // SCHEDULER_H

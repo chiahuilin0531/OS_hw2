@@ -293,7 +293,6 @@ SWITCH
 
 
 #ifdef x86
-#<Trace
 
         .text
         .align  2
@@ -368,7 +367,7 @@ SWITCH:
         movl    _eax_save,%eax
 
         ret
-#Trace>
+
 #endif // x86
 
 

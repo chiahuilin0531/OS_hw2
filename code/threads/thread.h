@@ -59,11 +59,7 @@
 // Size of the thread's private execution stack.
 // WATCH OUT IF THIS ISN'T BIG ENOUGH!!!!!
 
-//<TRACE
-// Enlarge stack size >.<
-// const int StackSize = (4 * 1024);   // in words
 const int StackSize = (8 * 1024);   // in words
-//TRACE>
 
 
 // Thread state
@@ -89,11 +85,7 @@ class Thread {
     void *machineState[MachineStateSize];  // all registers except for stackTop
 
   public:
-    //<TRACE
-    // ThreadID helps to identity every thread. 
-    // Thread(char* debugName); 
     Thread(char* debugName, int threadID);      // initialize a Thread 
-    //TRACE>
     ~Thread(); 				// deallocate a Thread
 					// NOTE -- thread being deleted
 					// must not be running when delete 
@@ -113,19 +105,21 @@ class Thread {
     void CheckOverflow();   	// Check if thread stack has overflowed
     void setStatus(ThreadStatus st) { status = st; }
 
+    ThreadStatus getStatus(){ return (status); }     
+    int* getstackTop() {return (stackTop);}
+
     char* getName() { return (name); }
     void Print() { cout << name; }
-    void SelfTest();        // test whether thread impl is working
-
-    //<TODO
+    void SelfTest();		// test whether thread impl is working
+    //<TODO>
     // Set & Get the value in Class Thread
     // 1. get ID
     // 2. set/get Priority
     // 3. set/get WaitTime
-    // 4. set/get PredictedBurstTime
+    // 4. set/get RemainingBurstTime
     // 5. set/get RunTime
     // 6. set/get RRTime
-    //TODO>
+    //<TODO>
 
   private:
     // some of the private data for this class is listed above
@@ -135,14 +129,14 @@ class Thread {
 				// (If NULL, don't deallocate stack)
     ThreadStatus status;	// ready, running or blocked
     char* name;
-    //<TRACE
+    //<REPORT>
+    int ID;
     int Priority;
     int WaitTime;
-    int PredictedBurstTime;
+    int RemainingBurstTime;
     int RunTime;
     int RRTime;
-    int ID;
-    //TRACE>
+    //<REPORT>
     void StackAllocate(VoidFunctionPtr func, void *arg);
     				// Allocate a stack for thread.
 				// Used internally by Fork()
@@ -167,8 +161,6 @@ extern void ThreadPrint(Thread *thread);
 
 // Magical machine-dependent routines, defined in switch.s
 
-
-//<TRACE
 extern "C" {
 // First frame on thread execution stack; 
 //   	call ThreadBegin
@@ -179,6 +171,5 @@ void ThreadRoot();
 // Stop running oldThread and start running newThread
 void SWITCH(Thread *oldThread, Thread *newThread);
 }
-//TRACE>
 
 #endif // THREAD_H

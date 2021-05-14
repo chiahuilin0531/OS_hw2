@@ -33,10 +33,10 @@ CPP = /lib/cpp
 INCDIR =-I../userprog -I../threads -I../lib
 CFLAGS = -G 0 -c $(INCDIR)
 
-# <TODO
-# Make test files for hw2
+#<TODO>
+# Add test program to make
 all: halt shell matmult sort test1 test2 fileTest1 fileTest2 
-# TODO>
+#<TODO>
 
 start.o: start.s ../userprog/syscall.h
 	$(CPP) $(CPPFLAGS) start.s > strt.s
@@ -75,7 +75,7 @@ test2: test2.o start.o
 	$(LD) $(LDFLAGS) start.o test2.o -o test2.coff
 	../bin/coff2noff test2.coff test2
 
-# <EDITED
+# <hw1
 # Copy and modify this  if  a new test program is created!
 fileTest1: fileTest1.o start.o
 	$(LD) $(LDFLAGS) start.o fileTest1.o -o fileTest1.coff
@@ -84,10 +84,10 @@ fileTest1: fileTest1.o start.o
 fileTest2: fileTest2.o start.o
 	$(LD) $(LDFLAGS) start.o fileTest2.o -o fileTest2.coff
 	../bin/coff2noff fileTest2.coff fileTest2
-# EDITED>
+# hw1>
 
 
-# <Trace
+#<REPORT>
 hw2_test1: hw2_test1.o start.o
 	$(LD) $(LDFLAGS) start.o hw2_test1.o -o hw2_test1.coff
 	../bin/coff2noff hw2_test1.coff hw2_test1
@@ -95,8 +95,4 @@ hw2_test1: hw2_test1.o start.o
 hw2_test2: hw2_test2.o start.o
 	$(LD) $(LDFLAGS) start.o hw2_test2.o -o hw2_test2.coff
 	../bin/coff2noff hw2_test2.coff hw2_test2
-
-hw2_test3: hw2_test3.o start.o
-	$(LD) $(LDFLAGS) start.o hw2_test3.o -o hw2_test3.coff
-	../bin/coff2noff hw2_test3.coff hw2_test3
-# Trace>
+#<REPORT>

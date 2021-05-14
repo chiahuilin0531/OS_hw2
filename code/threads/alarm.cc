@@ -53,10 +53,10 @@ Alarm::CallBack()
     MachineStatus status = interrupt->getStatus();
     
 
-    //<TODO
+    //<TODO>
 
 
-    // In each "TimerTicks" (set 100 ticks in stat.h) ticks, there are three tasks to do:  
+    // In each 100 ticks, 
     
     // 1. Update Priority
 
@@ -64,10 +64,9 @@ Alarm::CallBack()
 
     // 3. Check Round Robin
 
-
-    //TODO>
-
-    //    if (status == IdleMode) {    // is it time to quit?
+    //<TODO>
+    
+     //    if (status == IdleMode) {    // is it time to quit?
  //        if (!interrupt->AnyFutureInterrupts()) {
     //        timer->Disable(); // turn off the timer
     // }

@@ -86,13 +86,12 @@ Semaphore::P()
     // disable interrupts
     IntStatus oldLevel = interrupt->SetLevel(IntOff);	
     
-    //<TRACE
     while (value == 0) { 		// semaphore not available
     	queue->Append(currentThread);	// so go to sleep
     	currentThread->Sleep(FALSE);
+        // cout << "Run to Waiting over" << endl;
     } 
     value--; 			// semaphore available, consume its value
-    //TRACE>
    
     // re-enable interrupts
     (void) interrupt->SetLevel(oldLevel);	
@@ -114,12 +113,11 @@ Semaphore::V()
     // disable interrupts
     IntStatus oldLevel = interrupt->SetLevel(IntOff);	
     
-    //<TRACE
     if (!queue->IsEmpty()) {  // make thread ready.
 	   kernel->scheduler->ReadyToRun(queue->RemoveFront());
+       // cout << "Ready to Run over" << endl;
     }
     value++;
-    //TRACE>
     
     // re-enable interrupts
     (void) interrupt->SetLevel(oldLevel);

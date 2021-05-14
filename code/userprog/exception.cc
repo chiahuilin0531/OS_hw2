@@ -25,6 +25,7 @@
 #include "main.h"
 #include "syscall.h"
 #include "synchconsole.h"
+
 //----------------------------------------------------------------------
 // ExceptionHandler
 // 	Entry point into the Nachos kernel.  Called when a user program
@@ -62,11 +63,10 @@ ExceptionHandler(ExceptionType which)
    		    kernel->interrupt->Halt();
 		    break;
 		case SC_PrintInt:
-			DEBUG(dbgSynch, "Print Int\n");
+			// DEBUG(dbgMLFQ, "Print Int");
 			val=kernel->machine->ReadRegister(4);
-			//<TRACE
 			kernel->synchConsoleOut->PutInt(val);
-			//TRACE>
+			DEBUG(dbgMLFQ, "\n");
 			return;
 /*		case SC_Exec:
 			DEBUG(dbgAddr, "Exec\n");
@@ -106,7 +106,7 @@ ExceptionHandler(ExceptionType which)
 			return;
 			ASSERTNOTREACHED();
 			break;
-		//<HW1
+		//<hw1
 		
 		case SC_Open:
 			val = kernel->machine->ReadRegister(4);
@@ -151,7 +151,7 @@ ExceptionHandler(ExceptionType which)
 			return;
 			ASSERTNOTREACHED();
 			break;
-		//HW1>
+		//hw1>
 		
 		default:
 		    cerr << "Unexpected system call " << type << "\n";

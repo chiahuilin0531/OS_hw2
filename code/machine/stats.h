@@ -50,7 +50,7 @@ class Statistics {
 // these time constants are none too exact.
 
 
-//<TRACE
+//<Trace
 // Setting different on Ticks & Time
 const int UserTick = 	   1;	// advance for each user-level instruction 
 const int SystemTick =	  10; 	// advance each time interrupts are enabled
@@ -59,6 +59,6 @@ const int SeekTime =	 500;  	// time disk takes to seek past one track
 const int ConsoleTime =	   1;	// time to read or write one character
 const int NetworkTime =	 100;  	// time to send or receive one packet
 const int TimerTicks = 	 100;  	// (average) time between timer interrupts
-//TRACE>
+//Trace>
 
 #endif // STATS_H

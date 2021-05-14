@@ -30,10 +30,9 @@ const char dbgAddr = 'a'; 		// address spaces (USER_PROGRAM)
 const char dbgNet = 'n'; 		// network emulation (NETWORK)
 
 
-//<TRACE
-// Add '-d z' in the end of command on Terminal to show debug information on HW2 
+//<REPORT>
 const char dbgMLFQ = 'z';
-//TRACE>
+//<REPOrT>
 
 class Debug {
   public:

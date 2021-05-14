@@ -17,7 +17,6 @@
 #include "machine.h"
 #include "synchdisk.h"
 
-
 class SynchConsoleInput;
 class SynchConsoleOutput;
 class SynchDisk;
@@ -33,13 +32,15 @@ class UserProgKernel : public ThreadedKernel {
 
     void SelfTest();		// test whether kernel is working
 
-    //<TRACE
-    void ExecAll();
-
-    int Exec(char * name, int priority);
+    //<REPORT>
+    void InitializeAllThreads();
 
     SynchConsoleInput *synchConsoleIn;
     SynchConsoleOutput *synchConsoleOut;
+
+    int InitializeOneThread(char * name, int priority, int burst_time);
+    //<REPORT>
+
 
     bool PhysicalPageUsed[NumPhysPages];
     int availablePhysicalPages(){
@@ -50,8 +51,6 @@ class UserProgKernel : public ThreadedKernel {
         }
         return availablePageCount;
     }
-    //TRACE>
-
     Thread* getThread(int threadID){return t[threadID];}
 
 // These are public for notational convenience.
@@ -68,13 +67,16 @@ class UserProgKernel : public ThreadedKernel {
 	Thread* t[30];
 	char*	execfile[30];
 
-    //<TRACE
+    //<REPORT>
     int threadPriority[30];
+    int threadRemainingBurstTime[30];
+
     int threadNum;
+
+    int execfileNum;
+    //<REPORT>
     char *consoleIn;
     char *consoleOut;
-    //TRACE>
-	int	execfileNum;
 };
 
 #endif //USERKERNEL_H

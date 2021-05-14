@@ -41,9 +41,9 @@ class SynchConsoleOutput : public CallBackObj {
     ~SynchConsoleOutput();
 
     void PutChar(char ch);	// Write a character, waiting if necessary
-    //<TRACE
+    //<REPORT>
     void PutInt(int n);
-    //TRACE>
+    //<REPORT>
     
   private:
     ConsoleOutput *consoleOutput;// the hardware display

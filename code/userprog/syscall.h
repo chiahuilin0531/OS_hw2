@@ -23,13 +23,12 @@
 #define SC_Exec		2
 #define SC_Join		3
 #define SC_Create	4
-//<HW1
-
+//<hw1
 #define SC_Open		5
 #define SC_Read		6
 #define SC_Write	7
 #define SC_Close	8
-//HW1>
+//hw1>
 #define SC_ThreadFork	9
 #define SC_ThreadYield	10
 #define SC_PrintInt	11
@@ -97,7 +96,7 @@ void Msg(char *msg);
 /* Create a Nachos file, with "name" */
 int Create(char *name);
 
-//<HW1
+//<hw1
 /* Open the Nachos file "name", and return an "OpenFileId" that can 
  * be used to read and write to the file.
  */
@@ -117,7 +116,7 @@ int Close();
 
 /* Close the file, we're done reading and writing to it. */
 
-//HW1>
+//hw1>
 
 /* User-level thread operations: Fork and Yield.  To allow multiple
  * threads to run within a user program. 

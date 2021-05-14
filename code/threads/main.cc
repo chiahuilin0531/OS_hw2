@@ -82,12 +82,12 @@ main(int argc, char **argv)
     CallOnUserAbort(Cleanup);		// if user hits ctl-C
 
 
-    //<TRACE
-    // Instead of call SelfTest & Run function, we use KernelType(or UserProgKernel)::ExecAll to deal with all threads in HW2
     // kernel->SelfTest();
+
+    //<REPORT>
     // kernel->Run();
-    kernel->ExecAll();
-    //TRACE>
+    kernel->InitializeAllThreads();
+    //<REPORT>
 
     
     return 0;

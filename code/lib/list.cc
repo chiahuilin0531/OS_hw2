@@ -235,7 +235,7 @@ SortedList<T>::Insert(T item)
     ListElement<T> *ptr;		// keep track
 
     ASSERT(!this->IsInList(item));
-    if (this->IsEmpty()) {			// if list is empty, put at front
+    if (this->IsEmpty()) {		// if list is empty, put at front
         this->first = element;
         this->last = element;
     } else if (compare(item, this->first->item) < 0) {  // item goes at front 

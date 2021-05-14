@@ -107,8 +107,7 @@ SynchConsoleOutput::PutChar(char ch)
     lock->Release();
 }
 
-
-//<TRACE
+//<REPORT>
 void 
 SynchConsoleOutput::PutInt(int value){
     char str[10];
@@ -123,7 +122,7 @@ SynchConsoleOutput::PutInt(int value){
     } while (str[index] != '\0');
     lock->Release();
 }
-//TRACE>
+//<REPORT>
 
 //----------------------------------------------------------------------
 // SynchConsoleOutput::CallBack

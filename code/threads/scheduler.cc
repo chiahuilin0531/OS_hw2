@@ -31,19 +31,19 @@
 
 
 
-//<TODO
-// Declare sorting rule of L1 & L2 ReadyQueue
+//<TODO>
+// Declare sorting rule of SortedList for L1 & L2 ReadyQueue
 // Hint: Funtion Type should be "static int"
-//TODO>
+//<TODO>
 
 Scheduler::Scheduler()
 {
-    //	schedulerType = type;
+//	schedulerType = type;
     // readyList = new List<Thread *>; 
-    toBeDestroyed = NULL;
-    //<TODO
+    //<TODO>
     // Initialize L1, L2, L3 ReadyQueue
-    //TODO>
+    //<TODO>
+	toBeDestroyed = NULL;
 } 
 
 //----------------------------------------------------------------------
@@ -53,9 +53,10 @@ Scheduler::Scheduler()
 
 Scheduler::~Scheduler()
 { 
-    //<TODO
+    //<TODO>
     // Remove L1, L2, L3 ReadyQueue
-    //TODO>
+    //<TODO>
+    // delete readyList; 
 } 
 
 //----------------------------------------------------------------------
@@ -73,16 +74,13 @@ Scheduler::ReadyToRun (Thread *thread)
     // DEBUG(dbgThread, "Putting thread on ready list: " << thread->getName());
 
     Statistics* stats = kernel->stats;
-
-    // readyList->Append(thread);
-    //<TODO
+    //<TODO>
     // According to priority of Thread, put them into corresponding ReadyQueue.
     // After inserting Thread into ReadyQueue, don't forget to reset some values.
-    // Hint: L1 ReadyQueue is preemptive SJF.
+    // Hint: L1 ReadyQueue is preemptive SRTN(Shortest Remaining Time Next).
     // When putting a new thread into L1 ReadyQueue, you need to check whether preemption or not.
-    
-
-    //TODO>
+    //<TODO>
+    // readyList->Append(thread);
 }
 
 //----------------------------------------------------------------------
@@ -97,17 +95,16 @@ Thread *
 Scheduler::FindNextToRun ()
 {
     ASSERT(kernel->interrupt->getLevel() == IntOff);
+
     /*if (readyList->IsEmpty()) {
     return NULL;
     } else {
         return readyList->RemoveFront();
     }*/
 
-    Statistics* stats = kernel->stats;
-    //<TODO
+    //<TODO>
     // a.k.a. Find Next (Thread in ReadyQueue) to Run
-
-    //TODO>
+    //<TODO>
 }
 
 //----------------------------------------------------------------------
@@ -211,15 +208,13 @@ void
 Scheduler::Print()
 {
     cout << "Ready list contents:\n";
-    //<TRACE
     // readyList->Apply(ThreadPrint);
     L1ReadyQueue->Apply(ThreadPrint);
     L2ReadyQueue->Apply(ThreadPrint);
     L3ReadyQueue->Apply(ThreadPrint);
-    //TRACE>
 }
 
-//<TODO
+// <TODO>
 
 // Function 1. Function definition of sorting rule of L1 ReadyQueue
 
@@ -237,4 +232,4 @@ Scheduler::UpdatePriority()
 
 }
 
-// TODO>
+// <TODO>

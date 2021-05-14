@@ -121,9 +121,9 @@ class Interrupt {
     
     void OneTick();       	// Advance simulated time
 
-    //<TRACE
-    bool yieldOnReturn;     // TRUE if we are going to call Thread::Yield() function, and then execute context switch
-    //TRACE>
+    //<TRACE>
+    bool yieldOnReturn;     // TRUE if we are to context switch
+    //<TRACE>
 
   private:
     IntStatus level;		// are interrupts enabled or disabled?
