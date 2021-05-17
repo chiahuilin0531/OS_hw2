@@ -40,6 +40,8 @@ class Scheduler {
     
 	//<REPORT>
 	void UpdatePriority();
+	void CheckAging();
+	void UpdateTime();
 	//<REPORT>
 
     // SelfTest for scheduler is implemented in class Thread
