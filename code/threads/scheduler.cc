@@ -67,6 +67,9 @@ Scheduler::~Scheduler()
 { 
     //<TODO>
     // Remove L1, L2, L3 ReadyQueue
+    delete L1ReadyQueue;
+    delete L2ReadyQueue;
+    delete L3ReadyQueue;
     //<TODO>
     // delete readyList; 
 } 
@@ -91,6 +94,7 @@ Scheduler::ReadyToRun (Thread *thread)
     // After inserting Thread into ReadyQueue, don't forget to reset some values.
     // Hint: L1 ReadyQueue is preemptive SRTN(Shortest Remaining Time Next).
     // When putting a new thread into L1 ReadyQueue, you need to check whether preemption or not.
+    
     //<TODO>
     // readyList->Append(thread);
 }
@@ -116,6 +120,19 @@ Scheduler::FindNextToRun ()
 
     //<TODO>
     // a.k.a. Find Next (Thread in ReadyQueue) to Run
+    
+    if (!L1ReadyQueue->IsEmpty()) {
+        return L1ReadyQueue->RemoveFront();
+
+    } else if (!L2ReadyQueue->IsEmpty()) {
+        return L2ReadyQueue->RemoveFront();
+
+    } else if (!L3ReadyQueue->IsEmpty()) {
+        return L3ReadyQueue->RemoveFront();
+
+    } else {
+        return NULL;
+    }
     //<TODO>
 }
 
