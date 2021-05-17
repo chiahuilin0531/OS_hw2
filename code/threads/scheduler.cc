@@ -34,6 +34,10 @@
 //<TODO>
 // Declare sorting rule of SortedList for L1 & L2 ReadyQueue
 // Hint: Funtion Type should be "static int"
+static int compare(Thread * A, Thread * B) {
+    
+    return 0;
+}
 //<TODO>
 
 Scheduler::Scheduler()
@@ -42,6 +46,10 @@ Scheduler::Scheduler()
     // readyList = new List<Thread *>; 
     //<TODO>
     // Initialize L1, L2, L3 ReadyQueue
+    L1ReadyQueue = new SortedList<Thread *>(&compare); 
+    L2ReadyQueue = new SortedList<Thread *>(&compare); 
+    L3ReadyQueue = new List<Thread *>; 
+
     //<TODO>
 	toBeDestroyed = NULL;
 } 
