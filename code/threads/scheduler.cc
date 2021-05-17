@@ -34,6 +34,15 @@
 //<TODO>
 // Declare sorting rule of SortedList for L1 & L2 ReadyQueue
 // Hint: Funtion Type should be "static int"
+static int 
+CompareBurstTime(Thread A, Thread B) {
+    return A.getRemainingBurstTime() > B.getRemainingBurstTime();
+}
+
+static int 
+CompareID(Thread A, Thread B) {
+    return A.getID() > B.getID();
+}
 //<TODO>
 
 Scheduler::Scheduler()
@@ -42,6 +51,10 @@ Scheduler::Scheduler()
     // readyList = new List<Thread *>; 
     //<TODO>
     // Initialize L1, L2, L3 ReadyQueue
+    L1ReadyQueue = new SortedList<Thread *>(&CompareBurstTime); 
+    L2ReadyQueue = new SortedList<Thread *>(&compare); 
+    L3ReadyQueue = new List<Thread *>; 
+
     //<TODO>
 	toBeDestroyed = NULL;
 } 
