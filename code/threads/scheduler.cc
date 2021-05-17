@@ -95,6 +95,7 @@ Scheduler::ReadyToRun (Thread *thread)
     // Hint: L1 ReadyQueue is preemptive SRTN(Shortest Remaining Time Next).
     // When putting a new thread into L1 ReadyQueue, you need to check whether preemption or not.
     
+    
     //<TODO>
     // readyList->Append(thread);
 }
