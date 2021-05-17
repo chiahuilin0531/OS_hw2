@@ -83,7 +83,7 @@ friend class ListIterator<T>;
 // element. 
 // All types to be inserted onto a sorted list must have a "Compare"
 // function defined:
-//	   int Compare(T x, T y) 
+//	   are(T x, T y) 
 //		returns -1 if x < y
 //		returns 0 if x == y
 //		returns 1 if x > y

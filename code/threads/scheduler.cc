@@ -22,7 +22,6 @@
 #include "debug.h"
 #include "scheduler.h"
 #include "main.h"
-
 //----------------------------------------------------------------------
 // Scheduler::Scheduler
 // 	Initialize the list of ready but not running threads.
@@ -69,6 +68,7 @@ Scheduler::~Scheduler()
     // Remove L1, L2, L3 ReadyQueue
     //<TODO>
     // delete readyList; 
+    
 } 
 
 //----------------------------------------------------------------------
