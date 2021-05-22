@@ -94,31 +94,9 @@ Scheduler::ReadyToRun (Thread *thread)
     // After inserting Thread into ReadyQueue, don't forget to reset some values.
     // Hint: L1 ReadyQueue is preemptive SRTN(Shortest Remaining Time Next).
     // When putting a new thread into L1 ReadyQueue, you need to check whether preemption or not.
-    
-<<<<<<< HEAD
-    
-=======
-    int pr = thread->getPr();
-
-    if (pr >= 100) {
-        L1ReadyQueue->Insert(thread);
-
-        if (kernel->currentThread->getRemainingBurstTime() > thread->getRemainingBurstTime()) {
-            kernel->currentThread->Sleep(FALSE);
-        }
-
-    } else if (pr >= 50) {
-        L2ReadyQueue->Insert(thread);
-
-    } else {
-        L3ReadyQueue->Append(thread);
-
-    }
-    
-    
-
->>>>>>> d7b650635d09b6ef45753aaa24b950d417ac7be2
     //<TODO>
+    
+    
     // readyList->Append(thread);
 }
 
