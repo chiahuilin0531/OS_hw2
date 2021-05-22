@@ -117,8 +117,8 @@ Scheduler::ReadyToRun (Thread *thread)
 
     thread->setWT(0);
 
-    DEBUG(dbgMLFQ, "[InsertToQueue] Tick [%d]: Thread [%d] is inserted into queue L[%d]", 
-                kernel->stats->totalTicks, thread->getID, thread->getLevel);
+    DEBUG(dbgMLFQ, "[InsertToQueue] Tick [" << kernel->stats->totalTicks << "]: Thread [" 
+                    << thread->getID() << "] is inserted into queue L[" << thread->getLevel() << "]");
 
 
     //<TODO>
@@ -162,9 +162,21 @@ Scheduler::FindNextToRun ()
         thr = NULL;
     }
 
-    DEBUG(dbgMLFQ, "[RemoveFromQueue] Tick [%d]: Thread [%d] is removed from queue L[%d]", 
-                kernel->stats->totalTicks, thr->getID, thr->getLevel);
+    if(thr) {
 
+        thr->setStartTime(kernel->stats->totalTicks);
+
+        DEBUG(dbgMLFQ, "[RemoveFromQueue] Tick [" << kernel->stats->totalTicks << "]: Thread [" 
+                    << thr->getID() <<"] is removed from queue L[" << thr->getLevel() << "]");
+
+    } 
+    // else {
+    //     DEBUG(dbgMLFQ, "[RemoveFromQueue] Tick [" << kernel->stats->totalTicks 
+    //                     << "]: No thread is removed from queue ");
+
+    // }
+
+    
     return thr;
 
     //<TODO>
@@ -226,8 +238,10 @@ Scheduler::Run (Thread *nextThread, bool finishing)
     SWITCH(oldThread, nextThread);
 
 
-    DEBUG(dbgMLFQ, "[ContextSwitch] Tick [{current total tick}]: Thread [{new thread ID}] is now selected for execution, thread [{prev thread ID}] is replaced, and it has executed [{accumulated ticks}] ticks", 
-                kernel->stats->totalTicks, nextThread->getID(), oldThread->getID(), oldThread->getRunTime());
+    DEBUG(dbgMLFQ, "[ContextSwitch] Tick [" << kernel->stats->totalTicks << "]: Thread [" 
+                    << nextThread->getID() << "] is now selected for execution, thread [" 
+                    << oldThread->getID() << "] is replaced, and it has executed [" 
+                    << oldThread->getRunTime() << "] ticks");
 
     // we're back, running oldThread
       
@@ -306,8 +320,8 @@ Scheduler::UpdatePriority(Thread * thr)
     thr->setWT(0);
 
 
-    DEBUG(dbgMLFQ, "[UpdatePriority] Tick [%d]: Thread [%d] changes its priority from [%d] to [%d]", 
-                kernel->stats->totalTicks, thr->getID, oldPr, thr->getPr());
+    DEBUG(dbgMLFQ, "[UpdatePriority] Tick [" << kernel->stats->totalTicks << "]: Thread [" 
+                    << thr->getID() << "] changes its priority from [" << oldPr << "] to [" << thr->getPr() << "]");
 }
 
 void 
@@ -401,6 +415,8 @@ Scheduler::CheckRR() {
 void 
 Scheduler::ResetThreadValue(Thread * thr) {
 
+    thr->setRunTime(kernel->stats->totalTicks - thr->getStartTime());
+
     int oldBT = thr->getRemainingBurstTime();
     int RT = thr->getRunTime();
 
@@ -408,10 +424,10 @@ Scheduler::ResetThreadValue(Thread * thr) {
 
     thr->setWT(0);
     thr->setRRTime(0);
-    // thr->setRunTime(0);
 
-    DEBUG(dbgMLFQ, "[UpdateRemainingBurstTime] Tick [%d]: Thread [%d] update remaining burst time, from: [%d] - [%d], to [%d]", 
-                kernel->stats->totalTicks, thr->getID, oldBT, RT, thr->getRemainingBurstTime());
+    DEBUG(dbgMLFQ, "[UpdateRemainingBurstTime] Tick [" << kernel->stats->totalTicks 
+                    << "]: Thread [" << thr->getID() << "] update remaining burst time, from: [" 
+                    << oldBT << "] - [" << RT << "], to [" << thr->getRemainingBurstTime() << "]");
 }
 
 // <TODO>

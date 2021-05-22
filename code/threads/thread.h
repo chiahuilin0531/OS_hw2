@@ -128,8 +128,8 @@ class Thread {
     void setWT(int wt) { WaitTime = wt;}
     int getWT() { return WaitTime;}
 
-    // void setSWT(int swt) { StartWaitingTicks = swt;}
-    // int getSWT() { return StartWaitingTicks;}
+    void setStartTime(int stt) { StartTime = stt;}
+    int getStartTime() { return StartTime;}
 
     void setRemainingBurstTime(int bt) { RemainingBurstTime = bt;}
     int getRemainingBurstTime() { return RemainingBurstTime;}
@@ -161,6 +161,7 @@ class Thread {
     int RemainingBurstTime;
     int RunTime;
     int RRTime;
+    int StartTime;
     int level;
     //<REPORT>
     void StackAllocate(VoidFunctionPtr func, void *arg);
