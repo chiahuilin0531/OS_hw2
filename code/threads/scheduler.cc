@@ -284,8 +284,12 @@ Scheduler::UpdatePriority()
         if(/*this thread has been waiting > 400 ticks*/)
         {
             thr = iterator->Item();
-            // implement add priority function in thread??
-            // priority += 10
+            int temp_pr = thr->getPr();
+            temp_pr += 10;
+            thr->setPr(temp_pr);
+
+            // check queue
+            ReadyToRun(thr);
         }
         iterator->Next();
     }
@@ -296,8 +300,6 @@ Scheduler::CheckAging() {
     UpdatePriority();
     UpdateTime();
 
-    //put in the correct queue
-    ReadyToRun();
 }
 
 void 
