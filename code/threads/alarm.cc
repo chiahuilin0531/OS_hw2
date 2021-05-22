@@ -72,9 +72,10 @@ void Alarm::CallBack()
     }
     else
     { // there's someone to preempt
-        scheduler->CheckAging();
         scheduler->UpdateTime(100);
-        if(scheduler->CheckRR() ) {
+        scheduler->CheckAging();
+
+        if(scheduler->CheckRR()) {
             interrupt->YieldOnReturn();
         }
         

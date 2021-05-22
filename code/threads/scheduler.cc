@@ -99,6 +99,7 @@ Scheduler::ReadyToRun (Thread *thread)
 
     if (pr >= 100) {
         L1ReadyQueue->Insert(thread);
+        thread->setLevel(1);
 
         if (kernel->currentThread->getRemainingBurstTime() > thread->getRemainingBurstTime()) {
             kernel->currentThread->Sleep(FALSE);
@@ -106,9 +107,11 @@ Scheduler::ReadyToRun (Thread *thread)
 
     } else if (pr >= 50) {
         L2ReadyQueue->Insert(thread);
+        thread->setLevel(2);
 
     } else {
         L3ReadyQueue->Append(thread);
+        thread->setLevel(3);
     }
 
     thread->setWT(0);
@@ -356,7 +359,7 @@ Scheduler::UpdateTime(int addT) {
     }
 
     thr = kernel->currentThread;
-    thr->setRRTime(thr->getRRTime() + addT);
+    if(thr->getLevel() == 3) thr->setRRTime(thr->getRRTime() + addT);
     thr->setRunTime(thr->getRunTime() + addT);
     thr->setWT(0);
     
@@ -364,7 +367,12 @@ Scheduler::UpdateTime(int addT) {
 
 bool 
 Scheduler::CheckRR() {
+    Thread * thr = kernel->currentThread;
 
+    if((thr->getLevel() == 3) && (thr->getRRTime() >= 200))
+        return TRUE;
+    else 
+        return FALSE;
 }
 
 // <TODO>

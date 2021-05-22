@@ -227,6 +227,9 @@ class Thread {
     void setRRTime(int rrt) { RRTime = rrt;}
     int getRRTime() { return RRTime;}
 
+    void setLevel(int l) {level = l;}
+    int getLevel() {return level;}
+
     //<TODO>
 
   private:
@@ -245,6 +248,7 @@ class Thread {
     int RemainingBurstTime;
     int RunTime;
     int RRTime;
+    int level;
     //<REPORT>
     void StackAllocate(VoidFunctionPtr func, void *arg);
     				// Allocate a stack for thread.
