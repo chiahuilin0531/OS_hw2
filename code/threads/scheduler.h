@@ -10,8 +10,9 @@
 #define SCHEDULER_H
 
 #include "copyright.h"
-#include "list.h"
+#include "../lib/list.h"
 #include "thread.h"
+
 
 // The following class defines the scheduler/dispatcher abstraction -- 
 // the data structures and operations needed to keep track of which 
