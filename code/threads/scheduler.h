@@ -40,9 +40,11 @@ class Scheduler {
 	void Print();			// Print contents of ready list
     
 	//<REPORT>
-	void UpdatePriority();
+	void UpdatePriority(Thread *);
 	void CheckAging();
-	void UpdateTime();
+	void UpdateTime(int);
+	bool CheckRR();
+
 	//<REPORT>
 
     // SelfTest for scheduler is implemented in class Thread

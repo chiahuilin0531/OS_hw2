@@ -125,8 +125,11 @@ class Thread {
     void setPr(int pr) { Priority = pr;}
     int getPr() { return Priority;}
 
-    void setWaitTime(int wt) { WaitTime = wt;}
+    void setWT(int wt) { WaitTime = wt;}
     int getWT() { return WaitTime;}
+
+    // void setSWT(int swt) { StartWaitingTicks = swt;}
+    // int getSWT() { return StartWaitingTicks;}
 
     void setRemainingBurstTime(int bt) { RemainingBurstTime = bt;}
     int getRemainingBurstTime() { return RemainingBurstTime;}
@@ -151,6 +154,7 @@ class Thread {
     int ID;
     int Priority;
     int WaitTime;
+    // int StartWaitingTicks;
     int RemainingBurstTime;
     int RunTime;
     int RRTime;
