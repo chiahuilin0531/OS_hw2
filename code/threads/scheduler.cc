@@ -111,8 +111,6 @@ Scheduler::ReadyToRun (Thread *thread)
         L3ReadyQueue->Append(thread);
 
     }
-    
-    
 
     //<TODO>
     // readyList->Append(thread);
@@ -286,7 +284,7 @@ Scheduler::UpdatePriority()
         if(/*this thread has been waiting > 400 ticks*/)
         {
             thr = iterator->Item();
-            
+            //prority += 10
         }
         iterator->Next();
     }
@@ -294,7 +292,11 @@ Scheduler::UpdatePriority()
 
 void 
 Scheduler::CheckAging() {
+    UpdatePriority();
+    UpdateTime();
 
+    //put in the correct queue
+    ReadyToRun();
 }
 
 void 
