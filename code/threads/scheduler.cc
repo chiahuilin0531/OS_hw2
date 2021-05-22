@@ -102,7 +102,8 @@ Scheduler::ReadyToRun (Thread *thread)
         thread->setLevel(1);
 
         if (kernel->currentThread->getRemainingBurstTime() > thread->getRemainingBurstTime()) {
-            kernel->currentThread->Sleep(FALSE);
+            kernel->currentThread->Yield();
+            // kernel->currentThread->Sleep(FALSE);
         }
 
     } else if (pr >= 50) {
@@ -380,6 +381,15 @@ void Scheduler::ResetThreadValue(){
     thr->setRRTime(0);
     thr->setRunTime(0);
 
+}
+
+void 
+Scheduler::ResetThreadValue(Thread * thr) {
+    thr->setRemainingBurstTime(thr->getRemainingBurstTime() - thr->getRunTime());
+
+    thr->setWT(0);
+    thr->setRRTime(0);
+    thr->setRunTime(0);
 }
 
 // <TODO>
