@@ -13,6 +13,7 @@
 #include "../lib/list.h"
 #include "thread.h"
 
+
 // The following class defines the scheduler/dispatcher abstraction -- 
 // the data structures and operations needed to keep track of which 
 // thread is running, and which threads are ready but not running.
@@ -39,7 +40,11 @@ class Scheduler {
 	void Print();			// Print contents of ready list
     
 	//<REPORT>
-	void UpdatePriority();
+	void UpdatePriority(Thread *);
+	void CheckAging();
+	void UpdateTime(int);
+	bool CheckRR();
+
 	//<REPORT>
 
     // SelfTest for scheduler is implemented in class Thread

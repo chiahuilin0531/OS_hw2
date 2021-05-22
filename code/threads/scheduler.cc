@@ -66,6 +66,9 @@ Scheduler::~Scheduler()
 { 
     //<TODO>
     // Remove L1, L2, L3 ReadyQueue
+    delete L1ReadyQueue;
+    delete L2ReadyQueue;
+    delete L3ReadyQueue;
     //<TODO>
     // delete readyList; 
     
@@ -91,6 +94,25 @@ Scheduler::ReadyToRun (Thread *thread)
     // After inserting Thread into ReadyQueue, don't forget to reset some values.
     // Hint: L1 ReadyQueue is preemptive SRTN(Shortest Remaining Time Next).
     // When putting a new thread into L1 ReadyQueue, you need to check whether preemption or not.
+    
+    int pr = thread->getPr();
+
+    if (pr >= 100) {
+        L1ReadyQueue->Insert(thread);
+
+        if (kernel->currentThread->getRemainingBurstTime() > thread->getRemainingBurstTime()) {
+            kernel->currentThread->Sleep(FALSE);
+        }
+
+    } else if (pr >= 50) {
+        L2ReadyQueue->Insert(thread);
+
+    } else {
+        L3ReadyQueue->Append(thread);
+    }
+
+    thread->setWT(0);
+
     //<TODO>
     // readyList->Append(thread);
 }
@@ -116,6 +138,19 @@ Scheduler::FindNextToRun ()
 
     //<TODO>
     // a.k.a. Find Next (Thread in ReadyQueue) to Run
+    
+    if (!L1ReadyQueue->IsEmpty()) {
+        return L1ReadyQueue->RemoveFront();
+
+    } else if (!L2ReadyQueue->IsEmpty()) {
+        return L2ReadyQueue->RemoveFront();
+
+    } else if (!L3ReadyQueue->IsEmpty()) {
+        return L3ReadyQueue->RemoveFront();
+
+    } else {
+        return NULL;
+    }
     //<TODO>
 }
 
@@ -239,8 +274,96 @@ Scheduler::Print()
 // 3. After aging, Thread may insert to different ReadyQueue
 
 void 
-Scheduler::UpdatePriority()
+Scheduler::UpdatePriority(Thread * thr)
 {
+    if (thr->getPr() < 139)
+        thr->setPr(thr->getPr() + 10);
+    else
+        thr->setPr(149);
+
+    thr->setWT(0);
+}
+
+void 
+Scheduler::CheckAging() {
+    ListIterator<Thread *> *it1 = new ListIterator<Thread *>(L1ReadyQueue);
+    ListIterator<Thread *> *it2 = new ListIterator<Thread *>(L2ReadyQueue);
+    ListIterator<Thread *> *it3 = new ListIterator<Thread *>(L3ReadyQueue);
+
+    Thread * thr;
+
+    for (; !it1->IsDone(); it1->Next()) {
+	    thr = it1->Item();
+
+        if(thr->getWT() >= 400) {
+            UpdatePriority(thr);
+        }
+
+    }
+
+    for (; !it2->IsDone(); it2->Next()) {
+	    thr = it2->Item();
+
+        if(thr->getWT() >= 400) {
+            UpdatePriority(thr);
+            if (thr->getPr() > 99) {
+                L2ReadyQueue->Remove(thr);
+                ReadyToRun(thr);
+            }
+        }
+    }
+    
+    for (; !it3->IsDone(); it3->Next()) {
+	    thr = it3->Item();
+
+        if(thr->getWT() >= 400) {
+            UpdatePriority(thr);
+            if (thr->getPr() > 49) {
+                L3ReadyQueue->Remove(thr);
+                ReadyToRun(thr);
+            }
+        }
+    }
+}
+
+void 
+Scheduler::UpdateTime(int addT) {
+    ListIterator<Thread *> *it1 = new ListIterator<Thread *>(L1ReadyQueue);
+    ListIterator<Thread *> *it2 = new ListIterator<Thread *>(L2ReadyQueue);
+    ListIterator<Thread *> *it3 = new ListIterator<Thread *>(L3ReadyQueue);
+
+    Thread * thr;
+
+    for (; !it1->IsDone(); it1->Next()) {
+	    thr = it1->Item();
+        thr->setRunTime(0);
+        thr->setRRTime(0);
+        thr->setWT(thr->getWT() + addT);
+    }
+
+    for (; !it2->IsDone(); it2->Next()) {
+	    thr = it2->Item();
+        thr->setRunTime(0);
+        thr->setRRTime(0);
+        thr->setWT(thr->getWT() + addT);
+    }
+    
+    for (; !it3->IsDone(); it3->Next()) {
+	    thr = it3->Item();
+        thr->setRunTime(0);
+        thr->setRRTime(0);
+        thr->setWT(thr->getWT() + addT);
+    }
+
+    thr = kernel->currentThread;
+    thr->setRRTime(thr->getRRTime() + addT);
+    thr->setRunTime(thr->getRunTime() + addT);
+    thr->setWT(0);
+    
+}
+
+bool 
+Scheduler::CheckRR() {
 
 }
 
