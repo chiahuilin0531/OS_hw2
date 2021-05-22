@@ -80,7 +80,6 @@ enum ThreadStatus
 //  Some threads also belong to a user address space; threads
 //  that only run in the kernel have a NULL address space.
 
-<<<<<<< HEAD
 class Thread
 {
 private:
@@ -163,97 +162,6 @@ private:
   void StackAllocate(VoidFunctionPtr func, void *arg);
   // Allocate a stack for thread.
   // Used internally by Fork()
-=======
-class Thread {
-  private:
-    // NOTE: DO NOT CHANGE the order of these first two members.
-    // THEY MUST be in this position for SWITCH to work.
-    int *stackTop;			 // the current stack pointer
-    void *machineState[MachineStateSize];  // all registers except for stackTop
-
-  public:
-    Thread(char* debugName, int threadID);      // initialize a Thread 
-    ~Thread(); 				// deallocate a Thread
-					// NOTE -- thread being deleted
-					// must not be running when delete 
-					// is called
-
-    // basic thread operations
-
-    void Fork(VoidFunctionPtr func, void *arg); 
-    				// Make thread run (*func)(arg)
-    void Yield();  		// Relinquish the CPU if any 
-				// other thread is runnable
-    void Sleep(bool finishing); // Put the thread to sleep and 
-				// relinquish the processor
-    void Begin();		// Startup code for the thread	
-    void Finish();  		// The thread is done executing
-    
-    void CheckOverflow();   	// Check if thread stack has overflowed
-    void setStatus(ThreadStatus st) { status = st; }
-
-    ThreadStatus getStatus(){ return (status); }     
-    int* getstackTop() {return (stackTop);}
-
-    char* getName() { return (name); }
-    void Print() { cout << name; }
-    void SelfTest();		// test whether thread impl is working
-    //<TODO>
-    // Set & Get the value in Class Thread
-    // 1. get ID
-    // 2. set/get Priority
-    // 3. set/get WaitTime
-    // 4. set/get RemainingBurstTime
-    // 5. set/get RunTime
-    // 6. set/get RRTime
-
-    int getID() { return ID;}
-
-    void setPr(int pr) { Priority = pr;}
-    int getPr() { return Priority;}
-
-    void setWT(int wt) { WaitTime = wt;}
-    int getWT() { return WaitTime;}
-
-    // void setSWT(int swt) { StartWaitingTicks = swt;}
-    // int getSWT() { return StartWaitingTicks;}
-
-    void setRemainingBurstTime(int bt) { RemainingBurstTime = bt;}
-    int getRemainingBurstTime() { return RemainingBurstTime;}
-
-    void setRunTime(int rt) { RunTime = rt;}
-    int getRunTime() { return RunTime;}
-    
-    void setRRTime(int rrt) { RRTime = rrt;}
-    int getRRTime() { return RRTime;}
-
-    void setLevel(int l) {level = l;}
-    int getLevel() {return level;}
-
-    //<TODO>
-
-  private:
-    // some of the private data for this class is listed above
-    
-    int *stack; 	 	// Bottom of the stack 
-				// NULL if this is the main thread
-				// (If NULL, don't deallocate stack)
-    ThreadStatus status;	// ready, running or blocked
-    char* name;
-    //<REPORT>
-    int ID;
-    int Priority;
-    int WaitTime;
-    // int StartWaitingTicks;
-    int RemainingBurstTime;
-    int RunTime;
-    int RRTime;
-    int level;
-    //<REPORT>
-    void StackAllocate(VoidFunctionPtr func, void *arg);
-    				// Allocate a stack for thread.
-				// Used internally by Fork()
->>>>>>> fce3f6fe04c8948e2ecead1cff4049f20fc5fb3f
 
 #ifdef USER_PROGRAM
   // A thread running a user program actually has *two* sets of CPU registers --
