@@ -374,5 +374,12 @@ Scheduler::CheckRR() {
     else 
         return FALSE;
 }
+void Scheduler::ResetThreadValue(){
+    thr->setRemainingBurstTime(thr->getRemainingBurstTime()- thr->getRunTime());
+    thr->setWT(0);
+    thr->setRRTime(0);
+    thr->setRunTime(0);
+
+}
 
 // <TODO>
