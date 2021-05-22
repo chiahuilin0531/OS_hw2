@@ -95,9 +95,6 @@ Scheduler::ReadyToRun (Thread *thread)
     // Hint: L1 ReadyQueue is preemptive SRTN(Shortest Remaining Time Next).
     // When putting a new thread into L1 ReadyQueue, you need to check whether preemption or not.
     
-<<<<<<< HEAD
-    
-=======
     int pr = thread->getPr();
 
     if (pr >= 100) {
@@ -117,7 +114,6 @@ Scheduler::ReadyToRun (Thread *thread)
     
     
 
->>>>>>> d7b650635d09b6ef45753aaa24b950d417ac7be2
     //<TODO>
     // readyList->Append(thread);
 }
@@ -281,8 +277,19 @@ Scheduler::Print()
 void 
 Scheduler::UpdatePriority()
 {
-    ListIterator<Thread *> *iterator;
-
+    ListIterator<Thread *> *iterator = new ListIterator<Thread *>(L1ReadyQueue);
+    Thread* thr;
+    while(!iterator->IsDone())
+    {
+        // the priority of a process is increased by 10 after waiting for more than 400 ticks
+        // after waiting more 400 ticks, update again(?)
+        if(/*this thread has been waiting > 400 ticks*/)
+        {
+            thr = iterator->Item();
+            
+        }
+        iterator->Next();
+    }
 }
 
 void 
