@@ -44,6 +44,7 @@ class Scheduler {
 	void CheckAging();
 	void UpdateTime(int);
 	bool CheckRR();
+	void ResetThreadValue(Thread *);
 
 	//<REPORT>
 
