@@ -57,11 +57,28 @@ void Alarm::CallBack()
 
     // In each 100 ticks,
 
-    // 1. Update Priority
+    // 1. Update Priority           // 400 ticks
 
-    // 2. Update RunTime & RRTime
+    // 2. Update RunTime & RRTime   // 200 ticks
 
-    // 3. Check Round Robin
+    // 3. Check Round Robin         // 200 ticks
+
+    if (status == IdleMode)
+    { // is it time to quit?
+        if (!interrupt->AnyFutureInterrupts())
+        {
+            timer->Disable(); // turn off the timer
+        }
+    }
+    else
+    { // there's someone to preempt
+        scheduler->CheckAging();
+        scheduler->UpdateTime(100);
+        if(scheduler->CheckRR() ) {
+            interrupt->YieldOnReturn();
+        }
+        
+    }
 
     //<TODO>
 
