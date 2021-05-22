@@ -118,7 +118,7 @@ Scheduler::ReadyToRun (Thread *thread)
     thread->setWT(0);
 
     DEBUG(dbgMLFQ, "[InsertToQueue] Tick [" << kernel->stats->totalTicks << "]: Thread [" 
-                    << thread->getID() << "] is inserted into queue L[" << thread->getLevel() << "]");
+                    << thread->getID() << "] is inserted into queue L" << thread->getLevel());
 
 
     //<TODO>
@@ -167,7 +167,7 @@ Scheduler::FindNextToRun ()
         thr->setStartTime(kernel->stats->totalTicks);
 
         DEBUG(dbgMLFQ, "[RemoveFromQueue] Tick [" << kernel->stats->totalTicks << "]: Thread [" 
-                    << thr->getID() <<"] is removed from queue L[" << thr->getLevel() << "]");
+                    << thr->getID() <<"] is removed from queue L" << thr->getLevel());
 
     } 
     // else {
@@ -424,10 +424,10 @@ Scheduler::ResetThreadValue(Thread * thr) {
 
     thr->setWT(0);
     thr->setRRTime(0);
-
-    DEBUG(dbgMLFQ, "[UpdateRemainingBurstTime] Tick [" << kernel->stats->totalTicks 
+    if(thr->getID() != 0)
+        DEBUG(dbgMLFQ, "[UpdateRemainingBurstTime] Tick [" << kernel->stats->totalTicks 
                     << "]: Thread [" << thr->getID() << "] update remaining burst time, from: [" 
-                    << oldBT << "] - [" << RT << "], to [" << thr->getRemainingBurstTime() << "]");
+                    << oldBT << "] - [" << RT << "], to [" << oldBT - RT << "]");
 }
 
 // <TODO>
